@@ -1,0 +1,27 @@
+################resourcegroup module
+module "resource" {
+  source = "../../Modules/azurerm_Resource_Group" #C:\24 AUGUST\Modules\azurerm_Resource_Group
+  rg_map = var.rg_details
+}
+
+###########storageaccount module
+module "storage" {
+  depends_on = [module.resource]
+  source     = "../../Modules/azurerm_Storage_Account" #C:\24 AUGUST\Modules\azurerm_Storage_Account
+  st_map     = var.st_details
+}
+
+###########virtualnetwork module
+module "network" {
+  depends_on = [module.resource]
+  source     = "../../Modules/azurerm_Virtual_Network" #C:\24 AUGUST\Modules\azurerm_Virtual_Network
+  vnet_map   = var.vnet_details
+}
+
+###############subnet module
+module "subnet" {
+  depends_on = [module.network]
+  source     = "../../Modules/azurerm_Subnet" #C:\24 AUGUST\Modules\azurerm_Subnet
+  snet_map   = var.snet_details
+}
+
